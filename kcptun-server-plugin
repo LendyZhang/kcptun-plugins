@@ -3,7 +3,7 @@
 set -e
 
 if [ ! -f $(basename $0) ]; then
-    cd /usr/local/kcptun_plugins;
+    cd /usr/share/kcptun_plugins;
 fi
 
 source ./lib
@@ -33,9 +33,11 @@ set_kcp_defaults () {
     KCP_PARAMS_TARGET="--target $SS_LOCAL_HOST:$SS_LOCAL_PORT"
 
     if [ -z $key ]; then
-        warn "Key unspecified, using DEFAULT_INSECURE_KEY!"
+        KCP_PARAMS_KEY=""
+    else
+        KCP_PARAMS_KEY="--key ${key}"
     fi
-    KCP_PARAMS_KEY="--key ${key:-DEFAULT_INSECURE_KEY}"
+
     KCP_PARAMS_CRYPT="--crypt ${crypt:-aes}"
     KCP_PARAMS_MODE="--mode ${mode:-fast}"
 
